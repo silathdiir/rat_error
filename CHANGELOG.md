@@ -2,10 +2,14 @@
 
 ## TODO
 
-  * define functions and error fields of first version (in README).
-  * write tests.
+  * write test cases for function `rat_error`.
+  * impl function `rat_error`.
 
 ## Schedule
+
+### Sep.25.2017
+
+  * define configuration `RatError.Structure` and macro `rat_error` (an API).
 
 ### Sep.22.2017
 

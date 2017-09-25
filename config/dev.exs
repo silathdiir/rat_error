@@ -1,24 +1,5 @@
-# Rat Error
+use Mix.Config
 
-Provides helper functions for error handling:
-
-* detailed error description.
-* default and configurable error fields.
-* ...
-
-## Installation
-
-```elixir
-def deps do
-  [
-    {:rat_error, "~> 0.0.1"}
-  ]
-end
-```
-
-## Configuration
-
-```elixir
 config :rat_error, RatError.Structure,
   # Node Name, the default value is 'error'.
   #
@@ -78,4 +59,3 @@ config :rat_error, RatError.Structure,
       # Error module.
       :module
     ]
-```

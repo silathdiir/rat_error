@@ -1,18 +1,25 @@
 defmodule RatError do
-  @moduledoc """
-  Documentation for RatError.
-  """
+  @moduledoc File.read!("README.md")
 
-  @doc """
-  Hello world.
+  @doc false
+  defmacro __using__(_) do
+    quote location: :keep do
 
-  ## Examples
+      # TODO: Load configuration 'RatError.Structure'.
 
-      iex> RatError.hello
-      :world
+      import RatError
+    end
+  end
 
-  """
-  def hello do
-    :world
+  defmacro rat_error(error_code, opts \\ []) do
+    quote location: :keep do
+      file     = __ENV__.file
+      function = __ENV__.function
+      line     = __ENV__.line
+      module   = __ENV__.module
+
+      # TODO: fetch parameters from '__ENV__' and passed to format function.
+
+    end
   end
 end
