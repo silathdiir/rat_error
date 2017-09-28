@@ -2,10 +2,14 @@
 
 ## TODO
 
+  * impl `RatError.Formatter`.
   * write test cases for function `rat_error`.
-  * impl function `rat_error`.
 
 ## Schedule
+
+### Sep.28.2017
+
+  * impl `RatError.Structure`.
 
 ### Sep.25.2017
 
