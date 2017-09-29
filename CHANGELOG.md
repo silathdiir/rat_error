@@ -2,10 +2,14 @@
 
 ## TODO
 
-  * impl `RatError.Formatter`.
-  * write test cases for function `rat_error`.
+  * write more test cases for function `rat_error`.
+  * release `0.0.1` and publish to `hex.pm`.
 
 ## Schedule
+
+### Sep.29.2017
+
+  * impl `RatError.Formatter`.
 
 ### Sep.28.2017
 

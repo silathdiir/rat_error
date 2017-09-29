@@ -1,11 +1,15 @@
 defmodule RatError do
   @moduledoc File.read!("README.md")
 
+  alias RatError.{Formatter, Structure}
+
   @doc false
   defmacro __using__(opts \\ []) do
     quote(bind_quoted: [opts: opts], location: :keep) do
-      {:ok, structure} = RatError.Structure.create_from_default_config
-      {:ok, structure} = RatError.Structure.merge(structure, opts)
+      structure =
+        Structure.create_from_default_config
+        |> Structure.update(opts)
+
       @structure structure
 
       import RatError
@@ -39,9 +43,9 @@ defmodule RatError do
                         error_message: error_message,
                         opts:          opts],
           location: :keep) do
-      {:ok, structure} = RatError.Structure.update(@structure, opts)
+      structure = Structure.update(@structure, opts)
 
-      RatError.Formatter.format(__ENV__, structure, error_code, error_message)
+      Formatter.format(structure, __ENV__, error_code, error_message)
     end
   end
 end

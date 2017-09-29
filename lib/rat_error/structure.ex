@@ -63,7 +63,7 @@ defmodule RatError.Structure do
   @doc """
   Updates the struct with the specified options.
   """
-  def merge(%Structure{} = structure, opts) when is_list(opts) do
+  def update(%Structure{} = structure, opts) when is_list(opts) do
     params =
       Enum.reduce([:node, :prefix, :keys], %{},
         fn(k, acc) ->
