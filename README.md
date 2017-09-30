@@ -4,7 +4,6 @@ Provides helper functions for error handling:
 
 * detailed error description.
 * default and configurable error fields.
-* ...
 
 ## Installation
 
@@ -58,24 +57,24 @@ config :rat_error, RatError.Structure,
 
   # Support Keys
   keys:
-    [
-      # Error code defined by caller, e.g. an atom :no_entry, an integer 9 or a
-      # string "unexpected".
-      :code,
+  [
+    # Error code defined by caller, e.g. an atom :no_entry, an integer 9 or a
+    # string "unexpected".
+    :code,
 
-      # Error file path.
-      :file,
+    # Error file path.
+    :file,
 
-      # Error function name.
-      :function,
+    # Error function name.
+    :function,
 
-      # Error file line.
-      :line,
+    # Error file line.
+    :line,
 
-      # Error message of string passed in by caller.
-      :message,
+    # Error message of string passed in by caller.
+    :message,
 
-      # Error module.
-      :module
-    ]
+    # Error module.
+    :module
+  ]
 ```
