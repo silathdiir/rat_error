@@ -2,10 +2,13 @@
 
 ## TODO
 
-  * write more test cases for function `rat_error`.
   * release `0.0.1` and publish to `hex.pm`.
 
 ## Schedule
+
+### Sep.30.2017
+
+  * write more test cases for function `rat_error`.
 
 ### Sep.29.2017
 

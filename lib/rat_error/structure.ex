@@ -44,6 +44,27 @@ defmodule RatError.Structure do
   Creates the struct from the default 'RatError.Structure' configuration.
 
   The default configuration is set in 'config/*.exs'.
+
+  ## Examples
+
+  References 'config/test.exs' for the test configuration.
+
+  iex> Structure.create_from_default_config
+  %RatError.Structure
+    {
+      node:   :error,
+      prefix: nil,
+      keys:
+      [
+        :code,
+        :file,
+        :function,
+        :line,
+        :message,
+        :module
+      ]
+    }
+
   """
   def create_from_default_config do
     :rat_error
@@ -53,6 +74,33 @@ defmodule RatError.Structure do
 
   @doc """
   Creates the struct from the specified options.
+
+  ## Examples
+
+  iex> Structure.create(node: :err, keys: [:code, :message])
+  %RatError.Structure
+    {
+      node:   :err,
+      prefix: nil,
+      keys:   [:code, :message]
+    }
+
+  iex> Structure.create(prefix: :err, keys: [:code, :message])
+  %RatError.Structure
+    {
+      node:   nil,
+      prefix: :err,
+      keys:   [:code, :message]
+    }
+
+  iex> Structure.create(keys: :code)
+  %RatError.Structure
+    {
+      node:   nil,
+      prefix: nil,
+      keys:   [:code]
+    }
+
   """
   def create(opts) when is_list(opts) do
     keys = filter_keys(opts[:keys])
@@ -62,6 +110,18 @@ defmodule RatError.Structure do
 
   @doc """
   Updates the struct with the specified options.
+
+  ## Examples
+
+  iex> structure = %Structure{node: :err, keys: [:code]}
+  iex> Structure.update(structure, node: :error, prefix: :err, keys: :message)
+  %RatError.Structure
+    {
+      node:   :error,
+      prefix: :err,
+      keys:   [:message]
+    }
+
   """
   def update(%Structure{} = structure, opts) when is_list(opts) do
     params =

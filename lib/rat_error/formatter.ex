@@ -21,6 +21,11 @@ defmodule RatError.Formatter do
 
   ## Examples
 
+  iex> structure = %Structure{node: :err, keys: [:code, :message]}
+  iex> message = "Bad response!"
+  iex> Formatter.format(structure, __ENV__, :bad_response, message)
+  %{err: %{code: :bad_response, message: "Bad response!"}}
+
   iex> structure = %Structure{keys: [:code, :message]}
   iex> message = "Out of memory!"
   iex> Formatter.format(structure, __ENV__, :no_memory, message)

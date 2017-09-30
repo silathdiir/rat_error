@@ -4,11 +4,11 @@ config :rat_error, RatError.Structure,
   node:   :error,
   prefix: nil,
   keys:
-    [
-      :code,
-      :file,
-      :function,
-      :line,
-      :message,
-      :module
-    ]
+  [
+    :code,
+    :file,
+    :function,
+    :line,
+    :message,
+    :module
+  ]
