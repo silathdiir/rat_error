@@ -2,11 +2,10 @@
 
 ## TODO
 
-  * define functions and error fields of first version (in README).
-  * write tests.
-
 ## Schedule
 
-### Sep.22.2017
+### Release `0.0.1`
 
-  * init project.
+  * Exports function `rat_error` (after calling `use RatError`).
+  * Exports `rat_error` configuration (see `config/*.exs` for detail).
+  * Implements module `RatError.Formatter` and `RatError.Structure`.

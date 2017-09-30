@@ -10,7 +10,7 @@ defmodule RatError.Mixfile do
       start_permanent: Mix.env == :prod,
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
       name: "Rat Error",
       source_url: "https://github.com/silathdiir/rat_error"
     ]
