@@ -49,21 +49,21 @@ defmodule RatError.Structure do
 
   References 'config/test.exs' for the test configuration.
 
-  iex> Structure.create_from_default_config
-  %RatError.Structure
-    {
-      node:   :error,
-      prefix: nil,
-      keys:
-      [
-        :code,
-        :file,
-        :function,
-        :line,
-        :message,
-        :module
-      ]
-    }
+      iex> Structure.create_from_default_config
+      %RatError.Structure
+        {
+          node:   :error,
+          prefix: nil,
+          keys:
+          [
+            :code,
+            :file,
+            :function,
+            :line,
+            :message,
+            :module
+          ]
+        }
 
   """
   def create_from_default_config do
@@ -77,29 +77,29 @@ defmodule RatError.Structure do
 
   ## Examples
 
-  iex> Structure.create(node: :err, keys: [:code, :message])
-  %RatError.Structure
-    {
-      node:   :err,
-      prefix: nil,
-      keys:   [:code, :message]
-    }
+      iex> Structure.create(node: :err, keys: [:code, :message])
+      %RatError.Structure
+        {
+          node:   :err,
+          prefix: nil,
+          keys:   [:code, :message]
+        }
 
-  iex> Structure.create(prefix: :err, keys: [:code, :message])
-  %RatError.Structure
-    {
-      node:   nil,
-      prefix: :err,
-      keys:   [:code, :message]
-    }
+      iex> Structure.create(prefix: :err, keys: [:code, :message])
+      %RatError.Structure
+        {
+          node:   nil,
+          prefix: :err,
+          keys:   [:code, :message]
+        }
 
-  iex> Structure.create(keys: :code)
-  %RatError.Structure
-    {
-      node:   nil,
-      prefix: nil,
-      keys:   [:code]
-    }
+      iex> Structure.create(keys: :code)
+      %RatError.Structure
+        {
+          node:   nil,
+          prefix: nil,
+          keys:   [:code]
+        }
 
   """
   def create(opts) when is_list(opts) do
@@ -113,14 +113,14 @@ defmodule RatError.Structure do
 
   ## Examples
 
-  iex> structure = %Structure{node: :err, keys: [:code]}
-  iex> Structure.update(structure, node: :error, prefix: :err, keys: :message)
-  %RatError.Structure
-    {
-      node:   :error,
-      prefix: :err,
-      keys:   [:message]
-    }
+      iex> structure = %Structure{node: :error, keys: [:code]}
+      iex> Structure.update(structure, node: :err, prefix: :err, keys: :message)
+      %RatError.Structure
+        {
+          node:   :err,
+          prefix: :err,
+          keys:   [:message]
+        }
 
   """
   def update(%Structure{} = structure, opts) when is_list(opts) do
