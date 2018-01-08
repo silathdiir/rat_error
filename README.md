@@ -10,7 +10,7 @@ Provides helper functions for error handling:
 ```elixir
 def deps do
   [
-    {:rat_error, "~> 0.0.1"}
+    {:rat_error, "~> 0.0.2"}
   ]
 end
 ```
@@ -19,9 +19,14 @@ end
 
 ```elixir
 config :rat_error, RatError.Structure,
-  # Node Name, the default value is 'error'.
+  # Node Name
   #
-  # If node is 'err', the structure is,
+  # The node is removed if key `node` is not existing or value is nil. Error
+  # fields are exposed outside, and the below configuration `keys` must be set
+  # to distinguish with other caller's keys.
+  node: :err,
+
+  # So the structure should be,
   #
   # %{
   #   err:
@@ -34,47 +39,46 @@ config :rat_error, RatError.Structure,
   #     module:   Elixir.MyApp.Registration.UserController
   #   }
   # }
-  #
-  # If node is nil or an empty string, the node is removed. The fields are
-  # exposed outside, and the below configuration 'prefix' could be set to
-  # distinguish with other caller's keys.
-  node: :error,
 
-  # Field Prefix, the default value is nil (NO prefix).
+  # Support Key Mapping
   #
-  # If node is nil and prefix is 'err_', the structure is,
-  #
-  # %{
-  #   err_code:     :invalid_argument,
-  #   err_file:     "/home/dummy/my_app/web/user_controller.ex",
-  #   err_function: {:authenticate, 1},
-  #   err_line:     123,
-  #   err_message:  "wrong token!",
-  #   err_module:   Elixir.MyApp.Registration.UserController
-  # }
-  #
-  prefix: nil,
-
-  # Support Keys
+  # This Map must be set with the original fields (as Map keys). Map keys are
+  # original fields (see the below description for detail). Map values are
+  # custom field names (for formatting, they could be the same atoms as keys).
+  # The field is ignored if key is not existing or value is nil.
   keys:
-  [
+  %{
     # Error code defined by caller, e.g. an atom :no_entry, an integer 9 or a
     # string "unexpected".
-    :code,
+    code: :err_code,
 
     # Error file path.
-    :file,
+    file: :file,
 
     # Error function name.
-    :function,
+    function: :function,
 
     # Error file line.
-    :line,
+    line: :line,
 
     # Error message of string passed in by caller.
-    :message,
+    message: :err_msg,
 
     # Error module.
-    :module
-  ]
+    module: :module
+  }
+
+  # So the structure should be,
+  #
+  # %{
+  #   err:
+  #   %{
+  #     err_code: :invalid_argument,
+  #     err_msg:  "wrong token!",
+  #     file:     "/home/dummy/my_app/web/user_controller.ex",
+  #     function: {:authenticate, 1},
+  #     line:     123,
+  #     module:   Elixir.MyApp.Registration.UserController
+  #   }
+  # }
 ```
