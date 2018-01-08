@@ -33,9 +33,9 @@ defmodule RatError do
 
   Parameter 'opts' merges with the configuration in 'config/test.exs'.
 
-  iex> opts = [keys: [:code, :message]]
-  iex> rat_error(:wrong_password, "Wrong password!", opts)
-  %{error: %{code: :wrong_password, message: "Wrong password!"}}
+      iex> opts = [keys: [:code, :message]]
+      iex> rat_error(:wrong_password, "Wrong password!", opts)
+      %{error: %{code: :wrong_password, message: "Wrong password!"}}
 
   """
   defmacro rat_error(error_code \\ nil, error_message \\ "", opts \\ []) do
