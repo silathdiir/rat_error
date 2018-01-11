@@ -21,12 +21,14 @@ defmodule RatError.Formatter do
 
   ## Examples
 
-      iex> structure = %Structure{node: :err, keys: [:code, :message]}
+      iex> support_keys = %{code: :code, message: :message}
+      iex> structure = %Structure{node: :err, keys: support_keys}
       iex> message = "Bad response!"
       iex> Formatter.format(structure, __ENV__, :bad_response, message)
       %{err: %{code: :bad_response, message: "Bad response!"}}
 
-      iex> structure = %Structure{keys: [:code, :message]}
+      iex> support_keys = %{code: :code, message: :message}
+      iex> structure = %Structure{keys: support_keys}
       iex> message = "Out of memory!"
       iex> Formatter.format(structure, __ENV__, :no_memory, message)
       %{code: :no_memory, message: "Out of memory!"}
@@ -50,17 +52,16 @@ defmodule RatError.Formatter do
     end
   end
 
+  defp add_field(nil, _value, params), do: params
+  defp add_field(key, value, params), do: Map.put(params, key, value)
+
   defp format_code(params, structure, value),
   do: format_entry(params, structure, :code, value)
 
   defp format_entry(params, structure, key, value) when is_atom(key) do
-    if structure.keys |> List.wrap |> Enum.member?(key) do
-      new_key = String.to_atom(to_string(structure.prefix) <> to_string(key))
-
-      Map.put(params, new_key, value)
-    else
-      params
-    end
+    structure.keys
+    |> get_field_name(key)
+    |> add_field(value, params)
   end
 
   defp format_env_values(params, structure, env) do
@@ -70,4 +71,8 @@ defmodule RatError.Formatter do
 
   defp format_message(params, structure, value),
   do: format_entry(params, structure, :message, value)
+
+  defp get_field_name(nil, _key), do: nil
+  defp get_field_name(support_keys, key) when is_map(support_keys),
+  do: support_keys[key]
 end

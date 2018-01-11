@@ -1,6 +1,8 @@
 use Mix.Config
 
 config :rat_error, RatError.Structure,
-  node:   :error,
-  prefix: nil,
-  keys:   :code
+  node: :error,
+  keys: %{
+    code: :code,
+    message: :message
+  }
