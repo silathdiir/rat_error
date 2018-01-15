@@ -2,12 +2,12 @@
 
 ## TODO
 
-1. Integrates with Circle CI.
 1. Releases `0.0.2`.
 
 ## Schedule
 
 1. Removes 'prefix' configuration and adds Key Mapping.
+1. Integrates with Travis CI.
 
 ### Release `0.0.1`
 

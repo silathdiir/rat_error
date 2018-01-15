@@ -1,5 +1,7 @@
 # Rat Error
 
+[![Build Status](https://travis-ci.org/silathdiir/rat_error.svg?branch=master)](https://travis-ci.org/silathdiir/rat_error)
+
 Provides helper functions for error handling:
 
 * detailed error description.
