@@ -4,7 +4,7 @@ defmodule RatError.Mixfile do
   def project do
     [
       app: :rat_error,
-      version: "0.0.1",
+      version: "0.0.2",
       elixir: "~> 1.5",
       build_embedded:  Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -24,7 +24,7 @@ defmodule RatError.Mixfile do
 
   defp deps do
     [
-      {:credo,  "~> 0.5",   only: [:dev, :test]},
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end

@@ -5,9 +5,11 @@ defmodule RatError.Structure do
   This struct could be created from the specified options as below,
 
   [
-    node:   :error,
-    prefix: nil,
-    keys:   [:code, :message]
+    node: :error,
+    keys: %{
+      code: :code,
+      message: :message
+    }
   ]
 
   References the 'RatError.Structure' configuration in 'config/*.exs' for
@@ -17,9 +19,9 @@ defmodule RatError.Structure do
   alias __MODULE__
   require Logger
 
-  defstruct [:node, :prefix, :keys]
+  defstruct [:node, :keys]
 
-  @support_keys [
+  @support_fields [
     # Error code defined by caller, e.g. an atom :no_entry, an integer 9 or a
     # string "unexpected".
     :code,
@@ -50,20 +52,17 @@ defmodule RatError.Structure do
   References 'config/test.exs' for the test configuration.
 
       iex> Structure.create_from_default_config
-      %RatError.Structure
-        {
-          node:   :error,
-          prefix: nil,
-          keys:
-          [
-            :code,
-            :file,
-            :function,
-            :line,
-            :message,
-            :module
-          ]
+      %RatError.Structure{
+        node: :error,
+        keys: %{
+          code: :code,
+          file: :file,
+          function: :function,
+          line: :line,
+          message: :message,
+          module: :module
         }
+      }
 
   """
   def create_from_default_config do
@@ -77,35 +76,37 @@ defmodule RatError.Structure do
 
   ## Examples
 
-      iex> Structure.create(node: :err, keys: [:code, :message])
-      %RatError.Structure
-        {
-          node:   :err,
-          prefix: nil,
-          keys:   [:code, :message]
+      iex> support_keys = %{code: :code, message: :message}
+      iex> Structure.create(node: :err, keys: support_keys)
+      %RatError.Structure{
+        node: :err,
+        keys: %{
+          code: :code,
+          message: :message
         }
+      }
 
-      iex> Structure.create(prefix: :err, keys: [:code, :message])
-      %RatError.Structure
-        {
-          node:   nil,
-          prefix: :err,
-          keys:   [:code, :message]
+      iex> support_keys = %{code: :code, message: :message}
+      iex> Structure.create(keys: support_keys)
+      %RatError.Structure{
+        node: nil,
+        keys: %{
+          code: :code,
+          message: :message
         }
+      }
 
-      iex> Structure.create(keys: :code)
-      %RatError.Structure
-        {
-          node:   nil,
-          prefix: nil,
-          keys:   [:code]
-        }
+      iex> Structure.create(keys: %{code: :code})
+      %RatError.Structure{
+        node: nil,
+        keys: %{code: :code}
+      }
 
   """
   def create(opts) when is_list(opts) do
     keys = filter_keys(opts[:keys])
 
-    %Structure{node: opts[:node], prefix: opts[:prefix], keys: keys}
+    %Structure{node: opts[:node], keys: keys}
   end
 
   @doc """
@@ -113,19 +114,17 @@ defmodule RatError.Structure do
 
   ## Examples
 
-      iex> structure = %Structure{node: :error, keys: [:code]}
-      iex> Structure.update(structure, node: :err, prefix: :err, keys: :message)
-      %RatError.Structure
-        {
-          node:   :err,
-          prefix: :err,
-          keys:   [:message]
-        }
+      iex> structure = %Structure{node: :error, keys: %{code: :code}}
+      iex> Structure.update(structure, node: :err, keys: %{message: :message})
+      %RatError.Structure{
+        node: :err,
+        keys: %{message: :message}
+      }
 
   """
   def update(%Structure{} = structure, opts) when is_list(opts) do
     params =
-      Enum.reduce([:node, :prefix, :keys], %{},
+      Enum.reduce([:node, :keys], %{},
         fn(k, acc) ->
           case Keyword.fetch(opts, k) do
             {:ok, v} -> Map.put(acc, k, v)
@@ -143,14 +142,15 @@ defmodule RatError.Structure do
     Map.merge(structure, params)
   end
 
-  defp filter_keys(keys) do
-    keys          = List.wrap(keys)
-    filtered_keys = keys -- (keys -- @support_keys)
+  defp filter_keys(nil), do: nil
+  defp filter_keys(keys) when is_map(keys) do
+    fields = Map.keys(keys)
+    filtered_fields = fields -- (fields -- @support_fields)
 
-    if is_nil(List.first(filtered_keys)) do
+    if is_nil(List.first(filtered_fields)) do
       Logger.warn("there is no support keys - '#{inspect(keys)}'!")
     end
 
-    filtered_keys
+    Map.take(keys, filtered_fields)
   end
 end
