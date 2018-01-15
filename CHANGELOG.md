@@ -2,9 +2,9 @@
 
 ## TODO
 
-1. Releases `0.0.2`.
-
 ## Schedule
+
+### Release `0.0.2`
 
 1. Removes 'prefix' configuration and adds Key Mapping.
 1. Integrates with Travis CI.
