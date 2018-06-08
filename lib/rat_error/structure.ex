@@ -124,13 +124,12 @@ defmodule RatError.Structure do
   """
   def update(%Structure{} = structure, opts) when is_list(opts) do
     params =
-      Enum.reduce([:node, :keys], %{},
-        fn(k, acc) ->
-          case Keyword.fetch(opts, k) do
-            {:ok, v} -> Map.put(acc, k, v)
-            :error   -> acc
-          end
-        end)
+      Enum.reduce([:node, :keys], %{}, fn k, acc ->
+        case Keyword.fetch(opts, k) do
+          {:ok, v} -> Map.put(acc, k, v)
+          :error -> acc
+        end
+      end)
 
     params =
       if keys = params[:keys] do
@@ -143,9 +142,10 @@ defmodule RatError.Structure do
   end
 
   defp filter_keys(nil), do: nil
+
   defp filter_keys(keys) when is_map(keys) do
     fields = Map.keys(keys)
-    filtered_fields = fields -- (fields -- @support_fields)
+    filtered_fields = fields -- fields -- @support_fields
 
     if is_nil(List.first(filtered_fields)) do
       Logger.warn("there is no support keys - '#{inspect(keys)}'!")

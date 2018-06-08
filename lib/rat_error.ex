@@ -7,7 +7,7 @@ defmodule RatError do
   defmacro __using__(opts \\ []) do
     quote(bind_quoted: [opts: opts], location: :keep) do
       structure =
-        Structure.create_from_default_config
+        Structure.create_from_default_config()
         |> Structure.update(opts)
 
       @structure structure
@@ -39,12 +39,15 @@ defmodule RatError do
 
   """
   defmacro rat_error(error_code \\ nil, error_message \\ "", opts \\ []) do
-    quote(bind_quoted: [error_code: error_code,
-                        error_message: error_message,
-                        opts: opts],
-          location: :keep) do
+    quote(
+      bind_quoted: [
+        error_code: error_code,
+        error_message: error_message,
+        opts: opts
+      ],
+      location: :keep
+    ) do
       structure = Structure.update(@structure, opts)
-
       Formatter.format(structure, __ENV__, error_code, error_message)
     end
   end

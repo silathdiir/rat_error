@@ -37,7 +37,7 @@ defmodule RatErrorTest do
     result = rat_error_fun("user", opts)
 
     # retrieves the last component of the path.
-    file  = Path.basename(result.error.file)
+    file = Path.basename(result.error.file)
 
     error = %{result.error | file: file}
     result = %{result | error: error}
@@ -69,7 +69,7 @@ defmodule RatErrorTest do
     result = rat_error_fun("user", opts)
 
     # retrieves the last component of the path.
-    file  = Path.basename(result.file)
+    file = Path.basename(result.file)
 
     result = %{result | file: file}
     assert result == expected_result
