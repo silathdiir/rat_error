@@ -34,11 +34,12 @@ defmodule RatError.Formatter do
       %{code: :no_memory, message: "Out of memory!"}
 
   """
-  def format(%Structure{} = structure,
-             %Macro.Env{} = env,
-             error_code,
-             error_message) do
-
+  def format(
+        %Structure{} = structure,
+        %Macro.Env{} = env,
+        error_code,
+        error_message
+      ) do
     params =
       %{}
       |> format_code(structure, error_code)
@@ -56,7 +57,7 @@ defmodule RatError.Formatter do
   defp add_field(key, value, params), do: Map.put(params, key, value)
 
   defp format_code(params, structure, value),
-  do: format_entry(params, structure, :code, value)
+    do: format_entry(params, structure, :code, value)
 
   defp format_entry(params, structure, key, value) when is_atom(key) do
     structure.keys
@@ -65,14 +66,18 @@ defmodule RatError.Formatter do
   end
 
   defp format_env_values(params, structure, env) do
-    Enum.reduce(@env_keys, params,
-      &format_entry(&2, structure, &1, Map.get(env, &1)))
+    Enum.reduce(
+      @env_keys,
+      params,
+      &format_entry(&2, structure, &1, Map.get(env, &1))
+    )
   end
 
   defp format_message(params, structure, value),
-  do: format_entry(params, structure, :message, value)
+    do: format_entry(params, structure, :message, value)
 
   defp get_field_name(nil, _key), do: nil
+
   defp get_field_name(support_keys, key) when is_map(support_keys),
-  do: support_keys[key]
+    do: support_keys[key]
 end
