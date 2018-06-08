@@ -17,6 +17,47 @@ def deps do
 end
 ```
 
+## Usage
+
+Calls `use RatError` in the specified `TestModule`.
+
+```elixir
+defmodule TestModule do
+  use RatError
+  require Logger
+
+  def fun do
+    with {:ok, _} <- bar() do
+
+      # Some logic here ...
+
+    else
+      {:error, error} = error_result ->
+        # Logs the error details.
+        error |> inspect() |> Logger.error()
+
+        # Returns the error.
+        error_result
+    end
+  end
+
+  defp bar, do: {:error, rat_error("some_error_code", "Some Error Message.")}
+end
+```
+
+The `error` is formatted as below.
+
+```elixir
+%{
+  code: "some_error_code",
+  file: ".../lib/test_module.ex",
+  function: {:bar, 0},
+  line: 18,
+  message: "Some Error Message.",
+  module: TestModule
+}
+```
+
 ## Configuration
 
 ```elixir
