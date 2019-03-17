@@ -5,14 +5,17 @@ defmodule RatError.Mixfile do
     [
       app: :rat_error,
       version: "0.0.2",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps(),
       name: "Rat Error",
-      source_url: "https://github.com/silathdiir/rat_error"
+      source_url: "https://github.com/silathdiir/rat_error",
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+      ]
     ]
   end
 
@@ -24,8 +27,9 @@ defmodule RatError.Mixfile do
 
   defp deps do
     [
-      {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false}
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
   end
 
